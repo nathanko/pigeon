@@ -1,0 +1,73 @@
+<html>
+<head>
+	<title>Slingshot</title>
+</head>
+<body>
+	<h2>Upload.</h2>
+  <input type="text" id="stringInput" placeholder="Enter text here">
+  <button onclick="putMessage()">Put Message</button>
+  <br>
+  <input type="file" id="fileInput">
+  <button onclick="putFile()">Put File</button>
+  <br>
+  <h2>Download.</h2>
+  <input type="text" id="filename" placeholder="File name">
+  <input type="text" id="passphrase" placeholder="Passphrase">
+  <button onclick="getFile()">Get File</button>
+  <div id="content"></div>
+</body>
+<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+<script>
+// Initialize Firebase
+var config = {
+	apiKey: "AIzaSyDekqVZg1WnLisD6O50vJL_TmD6X-9LKFI",
+	authDomain: "slingshot-1760f.firebaseapp.com",
+	databaseURL: "https://slingshot-1760f.firebaseio.com",
+	projectId: "slingshot-1760f",
+	storageBucket: "slingshot-1760f.appspot.com",
+	messagingSenderId: "724529158971"
+};
+firebase.initializeApp(config);
+
+// Get a reference to the storage service, which is used to create references in your storage bucket
+var storage = firebase.storage();
+// Create a storage reference from our storage service
+var storageRef = storage.ref();
+var dataRef = storageRef.child('data');
+
+function putMessage(){
+  // Raw string is the default if no format is provided
+  var str = document.getElementById("stringInput").value;
+  dataRef.child("message.txt").putString(str).then(function(snapshot) {
+  	console.log("Uploaded string: "+str);
+  });
+}
+function putFile(){
+  var file = document.getElementById("fileInput").files[0];
+  var metadata = {
+    contentType: file.type,
+    customMetadata: {
+      "pass":"letmein",
+      "destroyOn":"999999999"
+    }
+  };
+  dataRef.child(file.name).put(file, metadata).then(function(snapshot) {
+    console.log("Uploaded file: "+file.name);
+  });
+}
+function getFile(){
+  var filename = document.getElementById("filename").value;
+  var passphrase = document.getElementById("passphrase").value;
+  var filepath = dataRef.child(filename).getDownloadURL().then(function(url) {
+    console.log(url);
+    document.getElementById("content").innerHTML = "<a href='"+url+"' target='blank'><button>Click here</button></a>";
+  }).catch(function(error) {
+    console.error(error.message_);
+    document.getElementById("content").innerHTML = error.message_;
+  });
+
+
+}
+
+</script>
+</html>
