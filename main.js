@@ -1,3 +1,7 @@
+var storage;
+var storageRef;
+var dataRef;
+
 (function () {
   // Initialize Firebase
   var config = {
@@ -10,11 +14,11 @@
   };
   firebase.initializeApp(config);
 
-  var storage = firebase.storage();
-  var storageRef = storage.ref();
-  var dataRef = storageRef.child('data');
+  storage = firebase.storage();
+  storageRef = storage.ref();
+  dataRef = storageRef.child('data');
 
-  console.log("Firebase config ready");
+  console.log("Firebase config ready.");
 })();
 
 function putMessage(){
@@ -25,6 +29,7 @@ function putMessage(){
   });
 }
 function putFile(){
+  console.log(dataRef);
   var file = document.getElementById("fileInput").files[0];
   var metadata = {
     contentType: file.type,
