@@ -22,14 +22,18 @@ var dataRef;
 
 })();
 
-
+/*
 function putMessage(){
   // Raw string is the default if no format is provided
   var str = document.getElementById("stringInput").value;
   dataRef.child("message.txt").putString(str).then(function(snapshot) {
   	console.log("Uploaded string: "+str);
   });
+}*/
+function uuid(){
+  return Math.floor((1 + Math.random()) * 0x10000000);
 }
+
 function putFile(){
   document.getElementById("downloadArea").style.visibility = "hidden"; //in case it's already showing
   console.log(dataRef);
@@ -41,7 +45,8 @@ function putFile(){
       "destroyOn":"999999999" //TODO: add server-side function to purge
     }
   };
-  var uploadTask = dataRef.child(file.name).put(file, metadata);
+  //TODO: Need true UUID
+  var uploadTask = dataRef.child(file.name+"-"+uuid()).put(file, metadata);
   uploadTask.on('state_changed', function(snapshot){
     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     console.log(progress);
@@ -50,14 +55,15 @@ function putFile(){
     console.log("Failed to upload: "+file.name);
   }, function() {
     var downloadLink = uploadTask.snapshot.downloadURL;
-    document.getElementById("downloadArea").style.visibility = "visible";
     console.log("Successfully uploaded: "+file.name);
     bitlyShorten(downloadLink, function(resp){
       console.log("Download link: "+resp);
       document.getElementById("downloadUrl").value = resp; 
+      document.getElementById("downloadArea").style.visibility = "visible";
       });
   });
 }
+/*
 function getFile(){
   console.log("getFile");
   var filename = document.getElementById("filename").value;
@@ -69,7 +75,7 @@ function getFile(){
     console.error(error.message_);
     document.getElementById("content").innerHTML = error.message_;
   });
-}
+}*/
 function renameFile(filepath){
   var name = filepath.lastIndexOf('\\') > 0 ? filepath.substring(filepath.lastIndexOf('\\')+1) : filepath;
   document.getElementById('chooseafile').innerHTML = name.length > 0 ? name : "Choose a file...";

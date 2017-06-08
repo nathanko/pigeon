@@ -10,25 +10,21 @@
 </head>
 <body style="background:#fff">
 
-  <div class="container ">
+  <div class="container">
     <div class="page-header" style="text-align:center;">
       <h1>Pigeon <small>Send files easily.</small></h1>
     </div>
 
-    <div id="upload" class="col-lg-6 col-lg-offset-3" style="bodrder:1px solid black">
-    <!--   <input type="text" id="stringInput" placeholder="Enter text here">
-      <button onclick="putMessage()" class="btn btn-primary">Put Message</button>
-      <br> -->
-
-      <div class="form-inline-NOT">
-        <!-- TODO: Add legacy support for IE -->
-        <label class="btn btn-default btn-file col-lg-8">
+    <div id="upload" class="col-lg-6 col-lg-offset-3" style="margin-top:3em">
+      <div>
+        <!-- TODO: Add legacy support for IE for this label-->
+        <label class="btn btn-default btn-file col-lg-9">
           <div id="chooseafile">Choose a file...</div>
           <input type="file" id="fileInput" onchange="renameFile(this.value)" style="display:none">
         </label>
-        <!-- <input type="text" id="passphraseUpload" placeholder="Passphrase" class="form-control">
-        <div>&nbsp;</div> -->
-        <button onclick="putFile()" class="btn btn-primary pull-right col-lg-3">Upload</button>
+        <div id="btn-wrapper" class="col-lg-3">
+        <button onclick="putFile()" class="btn btn-primary pull-right" style="width:100%">Upload</button>
+        </div>
         <div id="downloadArea" style="visibility:hidden;">
           <div class="col-lg-12">&nbsp;</div>
           <div class="col-lg-12 help-block" style="padding-left:0">Your download link:</div>
