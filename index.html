@@ -3,6 +3,10 @@
   <!-- TODO: Serve this page over HTTPS -->
   <title>Snapshot</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+
+  <script src="main.js"></script>
+  <script></script>
 </head>
 <body style="background:#fff">
 
@@ -20,12 +24,13 @@
       <div class="form-inline-NOT">
         <!-- TODO: Add legacy support for IE -->
         <label class="btn btn-default btn-file col-lg-12">
-          Choose a file...
-          <input type="file" id="fileInput" style="display:none">
+          <div id="chooseafile">Choose a file...</div>
+          <input type="file" id="fileInput" onchange="renameFile(this.value)" style="display:none">
         </label>
         <input type="text" id="passphraseUpload" placeholder="Passphrase" class="form-control">
         <div>&nbsp;</div>
         <button onclick="putFile()" class="btn btn-primary pull-right">Upload</button>
+        <!-- <button onclick="renameFile('clickme')">Click</button> -->
       </div>
     </div>
     <div id="download" class="col-lg-5">
@@ -42,7 +47,5 @@
 
 </body>
 
-<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
-<script src="main.js"></script>
 
 </html>

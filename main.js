@@ -19,7 +19,11 @@ var dataRef;
   dataRef = storageRef.child('data');
 
   console.log("Firebase config ready.");
+
+
+
 })();
+
 
 function putMessage(){
   // Raw string is the default if no format is provided
@@ -54,4 +58,7 @@ function getFile(){
     document.getElementById("content").innerHTML = error.message_;
   });
 }
-function hi(){console.log("hi")}
+function renameFile(filepath){
+  console.log("nameFile()");
+  document.getElementById('chooseafile').innerHTML = filepath.substring(filepath.lastIndexOf('\\')+1);
+}
