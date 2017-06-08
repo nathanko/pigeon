@@ -20,8 +20,6 @@ var dataRef;
 
   console.log("Firebase config ready.");
 
-
-
 })();
 
 
@@ -42,8 +40,21 @@ function putFile(){
       "destroyOn":"999999999" //TODO: add server-side function to purge
     }
   };
-  dataRef.child(file.name).put(file, metadata).then(function(snapshot) {
-    console.log("Uploaded file: "+file.name);
+  var uploadTask = dataRef.child(file.name).put(file, metadata);
+  uploadTask.on('state_changed', function(snapshot){
+    var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log(progress);
+    //TODO: Add progress bar
+  }, function(error) {
+    console.log("Failed to upload: "+file.name);
+  }, function() {
+    var downloadLink = uploadTask.snapshot.downloadURL;
+    document.getElementById("downloadUrl").style.visibility = "visible";
+    console.log("Successfully uploaded: "+file.name);
+    bitlyShorten(downloadLink, function(resp){
+      console.log("Download link: "+resp);
+      document.getElementById("downloadUrl").value = resp; 
+      });
   });
 }
 function getFile(){
@@ -59,6 +70,19 @@ function getFile(){
   });
 }
 function renameFile(filepath){
-  console.log("nameFile()");
-  document.getElementById('chooseafile').innerHTML = filepath.substring(filepath.lastIndexOf('\\')+1);
+  var name = filepath.lastIndexOf('\\') > 0 ? filepath.substring(filepath.lastIndexOf('\\')+1) : filepath;
+  document.getElementById('chooseafile').innerHTML = name.length > 0 ? name : "Choose a file...";
+}
+/***Bitly***/
+var bitlyAccessToken = "f35ff45dd07b0674c98b34eb6a42ed045ee7163d";
+function bitlyShorten(url, callback){
+  console.log("Getting bit.ly shortlink for "+url);
+  var apiUrl = "https://api-ssl.bitly.com/v3/shorten?access_token="+bitlyAccessToken+"&longUrl="+encodeURI(url)+"&format=txt";
+  var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", apiUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
 }

@@ -12,35 +12,27 @@
 
   <div class="container ">
     <div class="page-header" style="text-align:center;">
-      <h1>Snapshot <small>Send a file.</small></h1>
+      <h1>Snapshot</h1>
     </div>
 
-    <div id="upload" class="col-lg-5 col-lg-offset-1" style="border-right:1px solid #ddd;">
-    	<h2>Upload.</h2>
+    <div id="upload" class="col-lg-6 col-lg-offset-3" style="bodrder:1px solid black">
+    	<h2>Send a file.</h2>
     <!--   <input type="text" id="stringInput" placeholder="Enter text here">
       <button onclick="putMessage()" class="btn btn-primary">Put Message</button>
       <br> -->
 
       <div class="form-inline-NOT">
         <!-- TODO: Add legacy support for IE -->
-        <label class="btn btn-default btn-file col-lg-12">
+        <label class="btn btn-default btn-file col-lg-8">
           <div id="chooseafile">Choose a file...</div>
           <input type="file" id="fileInput" onchange="renameFile(this.value)" style="display:none">
         </label>
-        <input type="text" id="passphraseUpload" placeholder="Passphrase" class="form-control">
-        <div>&nbsp;</div>
-        <button onclick="putFile()" class="btn btn-primary pull-right">Upload</button>
-        <!-- <button onclick="renameFile('clickme')">Click</button> -->
-      </div>
-    </div>
-    <div id="download" class="col-lg-5">
-      <h2>Download.</h2>
-      <div class="form-inline-NOT">
-        <input type="text" id="filename" placeholder="File name" class="form-control">
-        <input type="text" id="passphrase" placeholder="Passphrase" class="form-control">
-        <div>&nbsp;</div>
-        <button onclick="getFile()" class="btn btn-primary pull-right">Download</button>
-        <div id="content" class=""></div>
+        <!-- <input type="text" id="passphraseUpload" placeholder="Passphrase" class="form-control">
+        <div>&nbsp;</div> -->
+        <button onclick="putFile()" class="btn btn-primary pull-right col-lg-3">Upload</button>
+        <div class="col-lg-12">&nbsp;</div>
+        <input type="text" id="downloadUrl" class="alert alert-info col-lg-12" style="visibility: hidden; text-align: center;" onclick="this.select()" readonly>
+        </input>
       </div>
     </div>
   </div>
