@@ -3,18 +3,17 @@
   <!-- TODO: Serve this page over HTTPS -->
   <title>Pigeon - Send a file</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="footer.css">
   <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
 
   <script src="main.js"></script>
   <script></script>
 </head>
 <body style="background:#fff">
-
-  <div class="page-header">
-    <h1>Pigeon</h1>
-  </div>
-  <div class="container">
-
+  <div class="container wrapper">
+    <div class="page-header">
+      <h1>Pigeon</h1>
+    </div>
     <div id="upload" class="col-lg-6 col-lg-offset-3" style="margin-top:5em">
       <div>
         <!-- TODO: Add legacy support for IE for this label-->
@@ -24,17 +23,27 @@
           <input type="file" id="fileInput" onchange="renameFile(this.value)" style="display:none">
         </label>
         <div id="btn-wrapper" class="col-sm-3 col-xs-12" style="padding:0">
-        <button onclick="putFile()" class="btn btn-primary col-xs-12 col-sm-11 pull-right">Upload</button>
+          <button onclick="putFile()" class="btn btn-primary col-xs-12 col-sm-11 pull-right">Upload</button>
         </div>
         <div id="downloadArea"  class="col-xs-12" style="visibility:hidden; padding:0">
           <div class="col-xs-12">&nbsp;</div>
           <div class="col-xs-12 help-block" style="padding-left:0">Your download link:</div>
           <input type="text" id="downloadUrl" class="alert alert-success col-xs-12" style="text-align: center; padding: 5px" onclick="this.select()" value="test" readonly>
-          </input>
-        </div>
-      </div>
+        </input>
+      </div>        
     </div>
   </div>
+  <div class="push"></div>
+</div>
+<footer class="col-xs-12 footer" style="text-align: center">
+  <a href="http://github.com/nathanko/snapshot" target="blank">
+    <small>
+      <img src="github-mark.png" style="height:2em;width:2em">
+    </small>
+  </a>
+  <br>
+  <small>Developed by <a href="http://nathanko.com" target="blank">Nathan Ko</a></small>.
+</footer>
 
 </body>
 
