@@ -31,6 +31,7 @@ function putMessage(){
   });
 }
 function putFile(){
+  document.getElementById("downloadArea").style.visibility = "hidden"; //in case it's already showing
   console.log(dataRef);
   var file = document.getElementById("fileInput").files[0];
   var metadata = {
@@ -49,7 +50,7 @@ function putFile(){
     console.log("Failed to upload: "+file.name);
   }, function() {
     var downloadLink = uploadTask.snapshot.downloadURL;
-    document.getElementById("downloadUrl").style.visibility = "visible";
+    document.getElementById("downloadArea").style.visibility = "visible";
     console.log("Successfully uploaded: "+file.name);
     bitlyShorten(downloadLink, function(resp){
       console.log("Download link: "+resp);

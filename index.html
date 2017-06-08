@@ -12,11 +12,10 @@
 
   <div class="container ">
     <div class="page-header" style="text-align:center;">
-      <h1>Pigeon</h1>
+      <h1>Pigeon <small>Send files easily.</small></h1>
     </div>
 
     <div id="upload" class="col-lg-6 col-lg-offset-3" style="bodrder:1px solid black">
-    	<h2>Send a file.</h2>
     <!--   <input type="text" id="stringInput" placeholder="Enter text here">
       <button onclick="putMessage()" class="btn btn-primary">Put Message</button>
       <br> -->
@@ -30,9 +29,12 @@
         <!-- <input type="text" id="passphraseUpload" placeholder="Passphrase" class="form-control">
         <div>&nbsp;</div> -->
         <button onclick="putFile()" class="btn btn-primary pull-right col-lg-3">Upload</button>
-        <div class="col-lg-12">&nbsp;</div>
-        <input type="text" id="downloadUrl" class="alert alert-info col-lg-12" style="visibility: hidden; text-align: center;" onclick="this.select()" readonly>
-        </input>
+        <div id="downloadArea" style="visibility:hidden;">
+          <div class="col-lg-12">&nbsp;</div>
+          <div class="col-lg-12 help-block" style="padding-left:0">Your download link:</div>
+          <input type="text" id="downloadUrl" class="alert alert-success col-lg-12" style="text-align: center; padding: 5px" onclick="this.select()" value="test" readonly>
+          </input>
+        </div>
       </div>
     </div>
   </div>
