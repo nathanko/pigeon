@@ -35,7 +35,8 @@ function putFile(){
     console.log("No file chosen.");
     return;
   }
-  var ttl = new Date().setDate(tomorrow.getDate()+1);  //TTL 24 hours
+  var ttl = new Date();
+  ttl.setDate(ttl.getDate()+1);  //TTL 24 hours
   var metadata = {
     contentType: file.type,
     customMetadata: {
