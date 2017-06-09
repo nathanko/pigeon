@@ -1,12 +1,10 @@
-html, body {
-    height: 100%;
+.wrapper{
+	position:relative;
+    min-height: 80vh;
+    min-height: -webkit-calc(100vh - 70px);
+    min-height: -moz-calc(00vh - 70px);
+    min-height: calc(100vh - 70px);
 }
-.wrapper {
-    min-height: 100%;
-    height: auto !important;
-    height: 100%;
-    margin: 0 auto -5em;
-}
-.footer, .push {
-    height: 5em;
+footer {
+    height: 70px;
 }
