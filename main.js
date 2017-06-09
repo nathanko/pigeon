@@ -22,44 +22,44 @@ var dataRef;
 
 })();
 
-/*
-function putMessage(){
-  // Raw string is the default if no format is provided
-  var str = document.getElementById("stringInput").value;
-  dataRef.child("message.txt").putString(str).then(function(snapshot) {
-  	console.log("Uploaded string: "+str);
-  });
-}*/
-function uuid(){
-  return Math.floor((1 + Math.random()) * 0x10000000);
+function uniqueFilename(name){
+  var dot = name.lastIndexOf('.');
+  var uuid = new Date().valueOf().toString(36);
+  return dot >= 0 ? name.substring(0, dot)+"-"+ uuid+name.substring(dot) : name+"-"+uuid;
 }
 
 function putFile(){
   document.getElementById("downloadArea").style.visibility = "hidden"; //in case it's already showing
-  console.log(dataRef);
   var file = document.getElementById("fileInput").files[0];
+  if (!file){
+    console.log("No file chosen.");
+    return;
+  }
+  var ttl = new Date().setDate(tomorrow.getDate()+1);  //TTL 24 hours
   var metadata = {
     contentType: file.type,
     customMetadata: {
-      "pass":"letmein", 
-      "destroyOn":"999999999" //TODO: add server-side function to purge
+      "destroyOn": ttl.toISOString() //TODO: add server-side function to purge
     }
   };
+  console.log(metadata.customMetadata);
   //TODO: Need true UUID
-  var uploadTask = dataRef.child(file.name+"-"+uuid()).put(file, metadata);
+  var filename = uniqueFilename(file.name);
+  var uploadTask = dataRef.child(filename).put(file, metadata);
   uploadTask.on('state_changed', function(snapshot){
     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     console.log(progress);
     //TODO: Add progress bar
   }, function(error) {
-    console.log("Failed to upload: "+file.name);
+    console.log("Failed to upload: "+filename);
   }, function() {
     var downloadLink = uploadTask.snapshot.downloadURL;
-    console.log("Successfully uploaded: "+file.name);
+    console.log("Successfully uploaded: "+filename);
     bitlyShorten(downloadLink, function(resp){
       console.log("Download link: "+resp);
       document.getElementById("downloadUrl").value = resp; 
       document.getElementById("downloadArea").style.visibility = "visible";
+      document.getElementById("downloadUrl").select(); 
       });
   });
 }
@@ -81,6 +81,7 @@ function renameFile(filepath){
   document.getElementById('chooseafile').innerHTML = name.length > 0 ? name : "Choose a file...";
 }
 /***Bitly***/
+//TODO: use more secure method
 var bitlyAccessToken = "f35ff45dd07b0674c98b34eb6a42ed045ee7163d";
 function bitlyShorten(url, callback){
   console.log("Getting bit.ly shortlink for "+url);
