@@ -33,6 +33,7 @@ function putFile(){
   var file = document.getElementById("fileInput").files[0];   
   if (!file){
     console.log("No file chosen.");
+    document.getElementById("uploadProgress").style.width = "2%";
     return;
   }
   var ttl = new Date();
