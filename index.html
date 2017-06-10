@@ -1,46 +1,59 @@
 <!doctype html>
 <html>
 <head>
-  <title>Pigeon - Send a file</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="footer.css">
-  <script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
-  <script src="main.js"></script>
-  <script></script>
+	<title>Pigeon - Send a file</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="footer.css">
+	<link rel="shortcut icon" type="image/ico" href="favicon.ico"/>
+	<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+	<script src="main.js"></script>
+	<script></script>
 </head>
 <body style="background:#fff">
-  <div class="container wrapper">
-    <div class="page-header">
-      <h1>Pigeon</h1>
-      <img src="pigeon.jpg" style="display: none">
-    </div>
-    <div id="upload" class="col-lg-6 col-lg-offset-3" style="margin-top: 40px;">
-      <div>
-        <h2 style="text-align: center">Send a file.</h2>
-        <label class="btn btn-default btn-file col-sm-9 col-xs-12">
-          <div id="chooseafile">Choose a file...</div>
-          <input type="file" id="fileInput" onchange="renameFile(this.value)" style="display:none">
-        </label>
-        <div id="btn-wrapper" class="col-sm-3 col-xs-12" style="padding:0">
-          <button onclick="putFile()" class="btn btn-primary col-xs-12 col-sm-11 pull-right">Upload</button>
-        </div>
-        <div id="downloadArea"  class="col-xs-12" style="visibility:hidden; padding:0">
-          <div class="col-xs-12">&nbsp;</div>
-          <div class="col-xs-12 help-block" style="padding-left:0">Your download link:</div>
-          <input type="text" id="downloadUrl" class="alert alert-success col-xs-12" style="text-align: center; padding: 5px" onclick="this.select()" value="test" readonly>
-        </div>
-      </div>        
-    </div>
-  </div>
-  <footer class="col-xs-12" style="text-align: center">
-    <a href="http://github.com/nathanko/snapshot" target="blank">
-      <small>
-        <img src="github-mark.png" style="height:2em;width:2em">
-      </small>
-    </a>
-    <br>
-    <small>Developed by <a href="http://nathanko.com" target="blank">Nathan Ko</a></small>.
-  </footer>
+	<div class="container wrapper">
+		<div class="page-header">
+			<h1 >
+				<img id="logo" src="pigeon-logo.png" style="height:1.7em;">Pigeon
+			</h1>
+		</div>
+		<div id="upload" class="col-lg-6 col-lg-offset-3" style="margin-top: 40px;">
+			<div>
+				<h2 style="text-align: center">Send a file.</h2>
+				<label class="btn btn-default btn-file col-sm-9 col-xs-12" style="padding:0;">
+				<div class="progress" style="padding:none;position:relative;margin:0;height:30px">
+						<div id="uploadProgress" class="progress-bar" style="width:0%;background:#ccf;-webkit-box-shadow:none;box-shadow:none;">
+							<div id="chooseafile" style="position:absolute;width:100%;top:6px;color:black">
+								Choose a file...
+							</div>
+						</div>
+					</div>
+					<input type="file" id="fileInput" onchange="renameFile(this.value)" style="display:none">
+				</label>
+				<div id="btn-wrapper" class="col-sm-3 col-xs-12" style="padding:0">
+					<button onclick="putFile()" class="btn btn-primary col-xs-12 col-sm-11 pull-right">Upload</button>
+				</div>
+				<div class="col-xs-12" style="padding:0">
+					&nbsp;
+				</div>
+			</div>
+			<div id="downloadArea"  class="col-xs-12" style="visibility:hidden; padding:0">
+				<div class="col-xs-12 help-block" style="padding-left:0">
+					Your download link:
+				</div>
+				<input type="text" id="downloadUrl" class="alert alert-success col-xs-12" style="text-align: center; padding: 5px;" onclick="this.select()" value="test" readonly>
+			</div>
+		</div>        
+	</div>
+</div>
+<footer class="col-xs-12" style="text-align: center">
+	<a href="http://github.com/nathanko/snapshot" target="blank">
+		<small>
+			<img src="github-mark.png" style="height:2em;width:2em">
+		</small>
+	</a>
+	<br>
+	<small>Developed by <a href="http://nathanko.com" target="blank">Nathan Ko</a></small>.
+</footer>
 
 </body>
 

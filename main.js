@@ -30,7 +30,7 @@ function uniqueFilename(name){
 
 function putFile(){
   document.getElementById("downloadArea").style.visibility = "hidden"; //in case it's already showing
-  var file = document.getElementById("fileInput").files[0];
+  var file = document.getElementById("fileInput").files[0];   
   if (!file){
     console.log("No file chosen.");
     return;
@@ -50,6 +50,7 @@ function putFile(){
   uploadTask.on('state_changed', function(snapshot){
     var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
     console.log(progress);
+    document.getElementById("uploadProgress").style.width = progress+"%";
     //TODO: Add progress bar
   }, function(error) {
     console.log("Failed to upload: "+filename);
@@ -59,6 +60,7 @@ function putFile(){
     bitlyShorten(downloadLink, function(resp){
       console.log("Download link: "+resp);
       document.getElementById("downloadUrl").value = resp; 
+        document.getElementById("uploadProgress").style.width = "100%";
       document.getElementById("downloadArea").style.visibility = "visible";
       document.getElementById("downloadUrl").select(); 
       });
