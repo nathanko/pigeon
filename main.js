@@ -5,7 +5,7 @@ var dataRef;
 (function () {
   // Initialize Firebase
   var config = {
-  	apiKey: "AIzaSyDekqVZg1WnLisD6O50vJL_TmD6X-9LKFI", //Should this be here??
+  	apiKey: "AIzaSyDekqVZg1WnLisD6O50vJL_TmD6X-9LKFI",
   	authDomain: "slingshot-1760f.firebaseapp.com",
   	databaseURL: "https://slingshot-1760f.firebaseio.com",
   	projectId: "slingshot-1760f",
@@ -57,19 +57,35 @@ function putFile(){
   }, function() {
     var downloadLink = uploadTask.snapshot.downloadURL;
     console.log("Successfully uploaded: "+filename);
-    bitlyShorten(downloadLink, function(resp){
-      console.log("Download link: "+resp);
-      document.getElementById("downloadUrl").value = resp; 
-        document.getElementById("uploadProgress").style.width = "100%";
+    bitlyShorten(downloadLink, function(shortLink){
+      console.log("Download link: "+shortLink);
+      document.getElementById("downloadUrl").value = shortLink; 
+      storeFileLink(shortLink);
+      document.getElementById("uploadProgress").style.width = "100%";
       document.getElementById("downloadArea").style.visibility = "visible";
       document.getElementById("downloadUrl").select(); 
-      });
+    });
   });
 }
 function renameFile(filepath){
   var name = filepath.lastIndexOf('\\') > 0 ? filepath.substring(filepath.lastIndexOf('\\')+1) : filepath;
   document.getElementById('chooseafile').innerHTML = name.length > 0 ? name : "Choose a file...";
 }
+function storeFileLink(shortLink){
+  var currStorage = JSON.parse(localStorage.getItem("recent_uploads"));
+
+  if (!currStorage){
+    currStorage = [];
+  }
+  currStorage = currStorage.concat([{
+    url: shortLink
+  }]);
+
+  localStorage.setItem("recent_uploads", JSON.stringify(currStorage));
+  console.log("recent_uploads in localStorage:"+JSON.stringify(currStorage));
+
+}
+
 /***Bitly***/
 //TODO: use more secure method
 var bitlyAccessToken = "f35ff45dd07b0674c98b34eb6a42ed045ee7163d";
@@ -77,10 +93,10 @@ function bitlyShorten(url, callback){
   console.log("Getting bit.ly shortlink for "+url);
   var apiUrl = "https://api-ssl.bitly.com/v3/shorten?access_token="+bitlyAccessToken+"&longUrl="+encodeURI(url)+"&format=txt";
   var xmlHttp = new XMLHttpRequest();
-    xmlHttp.onreadystatechange = function() { 
-        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
-            callback(xmlHttp.responseText);
-    }
+  xmlHttp.onreadystatechange = function() { 
+    if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+      callback(xmlHttp.responseText.trim());
+  }
     xmlHttp.open("GET", apiUrl, true); // true for asynchronous 
     xmlHttp.send(null);
-}
+  }
