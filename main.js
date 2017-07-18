@@ -32,7 +32,6 @@ function putFile(){
   document.getElementById("downloadArea").style.visibility = "hidden"; //in case it's already showing
   var file = document.getElementById("fileInput").files[0];   
   if (!file){
-    console.log("No file chosen.");
     document.getElementById("uploadProgress").style.width = "2%";
     return;
   }
