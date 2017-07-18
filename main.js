@@ -66,19 +66,6 @@ function putFile(){
       });
   });
 }
-/*
-function getFile(){
-  console.log("getFile");
-  var filename = document.getElementById("filename").value;
-  var passphrase = document.getElementById("passphrase").value; //TODO: add server-side function to authenticate download request
-  var filepath = dataRef.child(filename).getDownloadURL().then(function(url) {
-    console.log("Got url: "+url);
-    document.getElementById("content").innerHTML = "<a href='"+url+"' target='blank'><button class='btn btn-secondary pull-right'>Click here</button></a>";
-  }).catch(function(error) {
-    console.error(error.message_);
-    document.getElementById("content").innerHTML = error.message_;
-  });
-}*/
 function renameFile(filepath){
   var name = filepath.lastIndexOf('\\') > 0 ? filepath.substring(filepath.lastIndexOf('\\')+1) : filepath;
   document.getElementById('chooseafile').innerHTML = name.length > 0 ? name : "Choose a file...";
