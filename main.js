@@ -60,7 +60,7 @@ function putFile(){
     bitlyShorten(downloadLink, function(shortLink){
       console.log("Download link: "+shortLink);
       document.getElementById("downloadUrl").value = shortLink; 
-      storeFileLink(shortLink);
+      storeFileLink(file.name, shortLink, ttl);
       document.getElementById("uploadProgress").style.width = "100%";
       document.getElementById("downloadArea").style.visibility = "visible";
       document.getElementById("downloadUrl").select(); 
@@ -71,19 +71,20 @@ function renameFile(filepath){
   var name = filepath.lastIndexOf('\\') > 0 ? filepath.substring(filepath.lastIndexOf('\\')+1) : filepath;
   document.getElementById('chooseafile').innerHTML = name.length > 0 ? name : "Choose a file...";
 }
-function storeFileLink(shortLink){
+function storeFileLink(name, url, expiry){
   var currStorage = JSON.parse(localStorage.getItem("recent_uploads"));
 
   if (!currStorage){
     currStorage = [];
   }
   currStorage = currStorage.concat([{
-    url: shortLink
+    name: name,
+    url: url,
+    expiry: expiry
   }]);
 
   localStorage.setItem("recent_uploads", JSON.stringify(currStorage));
   console.log("recent_uploads in localStorage:"+JSON.stringify(currStorage));
-
 }
 
 /***Bitly***/
