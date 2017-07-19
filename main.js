@@ -20,8 +20,11 @@ var dataRef;
 
   console.log("Firebase config ready.");
 
-  document.addEventListener("DOMContentLoaded", function(event) { 
+  document.addEventListener("DOMContentLoaded", function(event) {
     displayRecentFiles();
+    setInterval(function() {
+      displayRecentFiles();
+    }, 10000);
   });
 
 })();
@@ -37,6 +40,7 @@ function putFile() {
   var file = document.getElementById("fileInput").files[0];
   if (!file) {
     document.getElementById("uploadProgress").style.width = "2%";
+    console.log("Cannot upload null file!")
     return;
   }
   var ttl = new Date();
@@ -90,12 +94,14 @@ function storeFileLink(name, url, expiry) {
   }]);
 
   localStorage.setItem("recent_uploads", JSON.stringify(currStorage));
-  console.log("recent_uploads in localStorage:" + JSON.stringify(currStorage));
+  console.debug("recent_uploads in localStorage:");
+  console.debug(currStorage);
 
   displayRecentFiles();
 }
 
 function displayRecentFiles() {
+  // console.log("displayRecentFiles run at "+new Date())
   var currStorage = JSON.parse(localStorage.getItem("recent_uploads"));
   currStorage.sort(function(a, b) {
     return b.expiry - a.expiry;
@@ -104,11 +110,33 @@ function displayRecentFiles() {
   document.getElementById('recentFiles').innerHTML = ""; //reset
 
   for (i in currStorage) {
-    console.log(currStorage[i]);
-    var row = "<tr><td><a href=\""+currStorage[i].url+"\">"+currStorage[i].name+"</a></td><td><a href=\""+currStorage[i].url+"\">"+currStorage[i].expiry+"</a></td></tr>"
-    document.getElementById('recentFiles').innerHTML += row;
+    //console.log(currStorage[i]);
+    var td1 = "<td><a href=\"" + currStorage[i].url + "\" target=\"_blank\">" + currStorage[i].name + "</a></td>";
+    var expiry = currStorage[i].expiry ? new Date(currStorage[i].expiry) : null;
+    var td2 = "<td><small>expires in " + until(expiry) + "</small></td>";
+    document.getElementById('recentFiles').innerHTML += "<tr>" + td1 + td2 + "</tr>";
   }
 
+  //TODO: Remove entry if expired from localStorage
+
+}
+
+function until(then) {
+  var now = new Date();
+  if (!then || !then instanceof Date) {
+    return "sometime";
+  }
+
+  //assume now-then has maximum of <1 month
+  var days = then.getDay() - now.getDay();
+  var hours = then.getHours() - now.getHours();
+  var minutes = then.getMinutes() - now.getMinutes();
+
+  if (days || hours) {
+    return Math.round(days*24 + hours + minutes / 60) + " hours"
+  } else {
+    return minutes + " minutes";
+  }
 }
 
 /***Bitly***/
