@@ -113,7 +113,7 @@ function displayRecentFiles() {
     //console.log(currStorage[i]);
     var td1 = "<td><a href=\"" + currStorage[i].url + "\" target=\"_blank\">" + currStorage[i].name + "</a></td>";
     var expiry = currStorage[i].expiry ? new Date(currStorage[i].expiry) : null;
-    var td2 = "<td><small>expires in " + until(expiry) + "</small></td>";
+    var td2 = "<td style=\"text-align:right;\"><small>expires in " + until(expiry) + "</small></td>";
     document.getElementById('recentFiles').innerHTML += "<tr>" + td1 + td2 + "</tr>";
   }
 
