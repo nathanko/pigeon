@@ -113,18 +113,25 @@ function displayRecentFiles() {
     //console.log(currStorage[i]);
     var td1 = "<td><a href=\"" + currStorage[i].url + "\" target=\"_blank\">" + currStorage[i].name + "</a></td>";
     var expiry = currStorage[i].expiry ? new Date(currStorage[i].expiry) : null;
-    var td2 = "<td style=\"text-align:right;\"><small>expires in " + until(expiry) + "</small></td>";
+    var timeleft = until(expiry);
+    if (!timeleft) {
+      console.log("Removed expired " + JSON.stringify(currStorage[i]) + " from localStorage");
+      currStorage.splice(i, 1); //remove expired entries from storage
+      continue;
+    }
+    var td2 = "<td style=\"text-align:right;\"><small>expires in " + timeleft + "</small></td>";
     document.getElementById('recentFiles').innerHTML += "<tr>" + td1 + td2 + "</tr>";
   }
 
-  //TODO: Remove entry if expired from localStorage
+  localStorage.setItem("recent_uploads", JSON.stringify(currStorage));
 
 }
 
 function until(then) {
   var now = new Date();
   if (!then || !then instanceof Date) {
-    return "sometime";
+    return sometime;
+    //return false;
   }
 
   //assume now-then has maximum of <1 month
@@ -132,8 +139,12 @@ function until(then) {
   var hours = then.getHours() - now.getHours();
   var minutes = then.getMinutes() - now.getMinutes();
 
+  if (days * 1440 + hours * 60 + minutes < 0) {
+    return false; //positive time only
+  }
+
   if (days || hours) {
-    return Math.round(days*24 + hours + minutes / 60) + " hours"
+    return Math.round(days * 24 + hours + minutes / 60) + " hours"
   } else {
     return minutes + " minutes";
   }
