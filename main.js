@@ -135,9 +135,10 @@ function until(then) {
   }
 
   //assume now-then has maximum of <1 month
-  var days = then.getDay() - now.getDay();
+  var days = then.getDate() - now.getDate();
   var hours = then.getHours() - now.getHours();
   var minutes = then.getMinutes() - now.getMinutes();
+  //console.debug("days: "+days+" hours: "+hours+" minutes: "+minutes)
 
   if (days * 1440 + hours * 60 + minutes < 0) {
     return false; //positive time only
